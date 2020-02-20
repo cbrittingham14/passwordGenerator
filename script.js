@@ -25,28 +25,24 @@ if (passwordLength < 8 || passwordLength > 128){
 
   var checkBoxArray = ["lowercase", "uppercase", "numeric", "special"];
 
-//   Generate lowercase arrray and number array from strings
+   //Input strings for needed characters
   var alph = "abcdefghijklmnopqrstuvwxyz";
   var num = "0987654321";
   var spec ="!#$%&'()*+,-./:;<=>?@[\]^_`{|}~"
-  var specialArray = [];
-  var lowercaseArray = [];
-  var numberArray = [];
-  lowercaseArray = alph.split("");
-  numberArray = num.split("");
-  specialArray = spec.split("");
 
-  console.log(numberArray);
-  console.log(specialArray);
+// Generate arrays containing individual characters from existing strings
+  var specialArray = mkArray(spec);
+  var lowercaseArray = mkArray(alph);
+  var numberArray = mkArray(num);
+  var uppercaseArray = mkUpper(lowercaseArray); 
 
 
-  console.log(lowercaseArray);
-  // generate uppercase array from lowercase array
-  var uppercaseArray = makeUpper(lowercaseArray); 
+  function mkArray(a){
+      var s = a.split("");
+      return s
+  }
 
-  console.log(uppercaseArray);
-
-  function makeUpper(a){
+  function mkUpper(a){
       var u = [];
       for(i=0; i<a.length; i++){
         u.push(a[i].toUpperCase());
@@ -94,12 +90,6 @@ generateBtn.addEventListener("click", writePassword);
 function writePassword() {
     // var password = generatePassword();
     var passwordText = document.querySelector("#password");
-
-    var box = document.getElementById("id");
-    console.log(box);
-    console.log(box.checked);
-    
-  
     
     passwordText.value = password;
   
