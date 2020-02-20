@@ -24,6 +24,7 @@ if (passwordLength < 8 || passwordLength > 128){
    
 
   var checkBoxArray = ["lowercase", "uppercase", "numeric", "special"];
+  mkCheckBoxes(checkBoxArray);
 
    //Input strings for needed characters
   var alph = "abcdefghijklmnopqrstuvwxyz";
@@ -50,35 +51,40 @@ if (passwordLength < 8 || passwordLength > 128){
       return u
   }
 
+  function mkCheckBoxes(names){
+      for(var i=0; i<names.length; i++){
 
-  var myDiv = document.getElementById("checkboxes"); 
+        //select div to add checkboxes to
+        var div = document.getElementById("checkboxes"); 
               
-            // creating checkbox element 
-            var checkbox = document.createElement('input'); 
+        // creating checkbox element 
+        var checkbox = document.createElement('input'); 
+          
+        // Assigning the attributes to created checkbox
+        checkbox.type = "checkbox"; 
+        checkbox.name = "name"; 
+        checkbox.value = "value"; 
+        checkbox.id = names[i]; 
 
-            console.log(checkbox);
-              
-            // Assigning the attributes to created checkbox
-            checkbox.type = "checkbox"; 
-            checkbox.name = "name"; 
-            checkbox.value = "value"; 
-            checkbox.id = "id"; 
+        console.log(div);
+          
+        // creating label for checkbox 
+        var label = document.createElement('label'); 
+          
+        // assigning attributes for the created label tag   
+        label.htmlFor = names[i]; 
+          
+        // appending the created text to  the created label tag  
+        label.appendChild(document.createTextNode(names[i]));
+          
+        // appending the checkbox and label to div 
+        div.appendChild(checkbox); 
+        div.appendChild(label); 
+      }
+  }
 
-            console.log(myDiv);
-              
-            // creating label for checkbox 
-            var label = document.createElement('label'); 
-              
-            // assigning attributes for the created label tag   
-            label.htmlFor = "id"; 
-              
-            // appending the created text to  the created label tag  
-            label.appendChild(document.createTextNode("Textbox label here"));
-              
-            // appending the checkbox 
-            // and label to div 
-            myDiv.appendChild(checkbox); 
-            myDiv.appendChild(label); 
+
+  
 
 // Add event listener to generate button
 generateBtn.addEventListener("click", writePassword);
