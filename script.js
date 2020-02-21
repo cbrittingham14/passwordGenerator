@@ -7,17 +7,13 @@ var passwordLength = parseInt(prompt("How long would you like the password to be
 
 //Verify password length is within bounds (8-128)
 if (passwordLength < 8 || passwordLength > 128){
-    console.log("password invalid. length: " + passwordLength);
+    
     var validLength = false;
     do{
-        console.log("length before new prompt: "+ passwordLength);
         passwordLength = parseInt(prompt("Enter a number between 8 and 128"));
-        console.log("legnth after new input: "+ passwordLength);
   
-        console.log("current bool state in while loop: "+ validLength);
         if (passwordLength > 8 && passwordLength < 129){
           validLength = true;
-          console.log("current bool state in if statement: " + validLength);
         }
       } while (validLength === false)
   }
@@ -30,7 +26,7 @@ if (passwordLength < 8 || passwordLength > 128){
   var num = "0987654321";
   var spec ="!#$%&'()*+,-./:;<=>?@[\]^_`{|}~";
   var up = alph.toUpperCase(); 
-
+  var str = " "
   var checkBoxObject = {
     "lowercase": alph,
     "uppercase": up,
@@ -49,6 +45,9 @@ if (passwordLength < 8 || passwordLength > 128){
    
     function randomString (arr){
 
+        var strArr = []
+        var s;
+
         for(var i=0; i < passwordLength; i++){
 
             var rand = Math.random();
@@ -56,14 +55,14 @@ if (passwordLength < 8 || passwordLength > 128){
 
             index = Math.floor(arr.length * rand);
 
-            console.log("rand inside randomString: " + index);
-
             var localArr = mkArray(arr[index]);
-
-            console.log("localArr: " + localArr);
-
-            genChar(localArr);
+            
+            //here is the problem
+           var c = genChar(localArr);
+        //    s = str.concat("str","c");
+        //    strArr.push(c);
         }
+        // s = strArr.toString();
     }
 
     // generate a random character from the array arr
@@ -73,8 +72,11 @@ if (passwordLength < 8 || passwordLength > 128){
         var l = arr.length;
         var i = Math.floor(l * rand); //generate random index
         var char = arr[i];  //select random character from array
-
-        console.log("here is the random character:" + char);
+        var c = char.toString()
+        str = str + c;
+        console.log("here is the random character:" + c);
+        console.log("here is str in genChar: " + str);
+        return c
     }
 
   function mkCheckBoxes(names){
@@ -134,8 +136,7 @@ function writePassword() {
         }
     }
 
-    console.log("passwardArray: " + passwordAlphArray);
-    console.log("passwardArray length: " + passwordAlphArray.length);
+    //check if user has selected at least one checkbox and generate a random string
     if(passwordAlphArray.length > 0){
         randomString(passwordAlphArray);
     } else {
