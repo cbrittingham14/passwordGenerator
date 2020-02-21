@@ -25,8 +25,9 @@ if (passwordLength < 8 || passwordLength > 128){
 // make an array for the names of each checkbox
   var checkBoxArray = ["lowercase", "uppercase", "numeric", "special"];
 
+    
+
   // make checkboxes based on the array passed to the function
-  mkCheckBoxes(checkBoxArray);
 
    //Input strings for needed characters
   var alph = "abcdefghijklmnopqrstuvwxyz";
@@ -40,6 +41,15 @@ if (passwordLength < 8 || passwordLength > 128){
   var numberArray = mkArray(num);
   var uppercaseArray = mkArray(up);
 
+  var checkBoxObject = {
+    "lowercase": alph,
+    "uppercase": up,
+    "numeric": num,
+    "special": spec,
+  }
+
+  console.log(checkBoxObject);
+  mkCheckBoxes(checkBoxArray);
 
 // split strings into Arrays filled with each character alone
   function mkArray(a){
@@ -63,12 +73,16 @@ if (passwordLength < 8 || passwordLength > 128){
 
     // generate a random character
     function genChar(ind){
+
         var rand = Math.random()
         var a = masterArray[ind];
         var n = a.length;
         var i = Math.floor(n*rand);
+
         console.log(i);
+
         var char = masterArray[ind][i];
+        
         console.log(char);
     }
 
@@ -77,25 +91,22 @@ if (passwordLength < 8 || passwordLength > 128){
 
         //select div to add checkboxes to
         var div = document.getElementById("checkboxes"); 
+        div.style.textAlign = "center";
               
         // creating checkbox element 
         var checkbox = document.createElement('input'); 
           
         // Assigning the attributes to created checkbox
         checkbox.type = "checkbox"; 
-        checkbox.name = "name"; 
-        checkbox.value = "value"; 
         checkbox.id = names[i]; 
-
-        console.log(div);
           
         // creating label for checkbox 
         var label = document.createElement('label'); 
           
-        // assigning attributes for the created label tag   
+        // assigning correct name for the label tag   
         label.htmlFor = names[i]; 
           
-        // appending the created text to  the created label tag  
+        // display the text by the correct checkbox  
         label.appendChild(document.createTextNode(names[i]));
           
         // appending the checkbox and label to div 
@@ -117,7 +128,20 @@ generateBtn.addEventListener("click", writePassword);
 function writePassword() {
     // var password = generatePassword();
     var passwordText = document.querySelector("#password");
-    
+    var isChecked = document.getElementById("lowercase");
     passwordText.value = password;
-  
+    console.log(isChecked.checked);
+
+    
+    for(var i =0; i < checkBoxArray.length; i++){
+
+        var isC = document.getElementById(checkBoxArray[i]);
+
+        if (isC.checked){
+            console.log("here is the i: " + i);
+
+        }
+    }
+
+
   }
