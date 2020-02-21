@@ -25,21 +25,11 @@ if (passwordLength < 8 || passwordLength > 128){
 // make an array for the names of each checkbox
   var checkBoxArray = ["lowercase", "uppercase", "numeric", "special"];
 
-    
-
-  // make checkboxes based on the array passed to the function
-
    //Input strings for needed characters
   var alph = "abcdefghijklmnopqrstuvwxyz";
   var num = "0987654321";
   var spec ="!#$%&'()*+,-./:;<=>?@[\]^_`{|}~";
   var up = alph.toUpperCase(); 
-
-// Generate arrays containing individual characters from existing strings
-  var specialArray = mkArray(spec);
-  var lowercaseArray = mkArray(alph);
-  var numberArray = mkArray(num);
-  var uppercaseArray = mkArray(up);
 
   var checkBoxObject = {
     "lowercase": alph,
@@ -48,7 +38,7 @@ if (passwordLength < 8 || passwordLength > 128){
     "special": spec,
   }
 
-  console.log(checkBoxObject);
+ // make checkboxes based on the array passed to the function
   mkCheckBoxes(checkBoxArray);
 
 // split strings into Arrays filled with each character alone
@@ -56,34 +46,35 @@ if (passwordLength < 8 || passwordLength > 128){
       var s = a.split("");
       return s
   }
+   
+    function randomString (arr){
 
-    var masterArray = [specialArray, lowercaseArray, numberArray, uppercaseArray];
+        for(var i=0; i < passwordLength; i++){
 
-    //generate a random index to access from master array
-    for(var i=0; i < passwordLength; i++){
+            var rand = Math.random();
+            var index;
 
-        var rand = Math.random();
-        console.log(rand);
+            index = Math.floor(arr.length * rand);
 
-        rand = Math.floor(masterArray.length*rand);
-        console.log(rand);
+            console.log("rand inside randomString: " + index);
 
-        genChar(rand);
+            var localArr = mkArray(arr[index]);
+
+            console.log("localArr: " + localArr);
+
+            genChar(localArr);
+        }
     }
 
-    // generate a random character
-    function genChar(ind){
+    // generate a random character from the array arr
+    function genChar(arr){
 
         var rand = Math.random()
-        var a = masterArray[ind];
-        var n = a.length;
-        var i = Math.floor(n*rand);
+        var l = arr.length;
+        var i = Math.floor(l * rand); //generate random index
+        var char = arr[i];  //select random character from array
 
-        console.log(i);
-
-        var char = masterArray[ind][i];
-        
-        console.log(char);
+        console.log("here is the random character:" + char);
     }
 
   function mkCheckBoxes(names){
@@ -115,33 +106,40 @@ if (passwordLength < 8 || passwordLength > 128){
       }
   }
 
-
-  
-
 // Add event listener to generate button
 generateBtn.addEventListener("click", writePassword);
-
-
 
 
 // Write password to the #password input
 function writePassword() {
     // var password = generatePassword();
     var passwordText = document.querySelector("#password");
-    var isChecked = document.getElementById("lowercase");
-    passwordText.value = password;
-    console.log(isChecked.checked);
-
     
+    passwordText.value = password;
+    var index = [];
+    var passwordAlphArray = [];
+
+    // record each checkbox's state
     for(var i =0; i < checkBoxArray.length; i++){
 
-        var isC = document.getElementById(checkBoxArray[i]);
+        //create local variables
+        var box = document.getElementById(checkBoxArray[i]);
 
-        if (isC.checked){
-            console.log("here is the i: " + i);
+        //add checked boxes to index array
+        if (box.checked){
 
+        //add selected boxes to password array
+        passwordAlphArray.push(checkBoxObject[checkBoxArray[i]]);
+            index.push(i);
         }
     }
 
+    console.log("passwardArray: " + passwordAlphArray);
+    console.log("passwardArray length: " + passwordAlphArray.length);
+    if(passwordAlphArray.length > 0){
+        randomString(passwordAlphArray);
+    } else {
+        alert("You must selec at least one checkbox");
+    }
 
   }
