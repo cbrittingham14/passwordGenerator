@@ -1,6 +1,11 @@
 // Assignment Code
 var generateBtn = document.querySelector("#generate");
 
+// make an array for the names of each checkbox
+var checkBoxArray = ["lowercase", "uppercase", "numeric", "special"];
+
+// make checkboxes based on the array passed to the function
+mkCheckBoxes(checkBoxArray);
 
 // Accept password length input
 var passwordLength = parseInt(prompt("How long would you like the password to be? (between 8 and 128 characters)"));
@@ -18,18 +23,11 @@ if (passwordLength < 8 || passwordLength > 128){
       } while (validLength === false)
   }
    
-// make an array for the names of each checkbox
-  var checkBoxArray = ["lowercase", "uppercase", "numeric", "special"];
-
-  // make checkboxes based on the array passed to the function
-  mkCheckBoxes(checkBoxArray);
-
    //Input strings for needed characters
   var alph = "abcdefghijklmnopqrstuvwxyz";
   var num = "0987654321";
   var spec ="!#$%&'()*+,-./:;<=>?@[\]^_`{|}~";
   var up = alph.toUpperCase(); 
-  var str = " "
 
   //object to select characters based on user input
   var checkBoxObject = {
@@ -44,24 +42,7 @@ if (passwordLength < 8 || passwordLength > 128){
       var s = a.split("");
       return s
   }
-   
-    // function randomString (arr){
-    //     // var strArr = []
-    //     // var s;
-    //     for(var i=0; i < passwordLength; i++){
-
-    //         var rand = Math.random();
-    //         var index;
-
-    //         index = Math.floor(arr.length * rand);
-
-    //         var localArr = mkArray(arr[index]);
-            
-    //         //here is the problem
-    //        var c = genChar(localArr);
-    //     }
-    // }
-
+   // make a random string of characters from the selected alphabets and password length
     function generatePassword(chars){
 
         var pwString = ""
@@ -74,8 +55,6 @@ if (passwordLength < 8 || passwordLength > 128){
         return pwString;
     }
 
-
-
     // generate a random character from the array arr
     function genChar(arr){
 
@@ -84,9 +63,7 @@ if (passwordLength < 8 || passwordLength > 128){
         var i = Math.floor(l * rand); //generate random index
         var char = arr[i];  //select random character from array
         var c = char.toString()
-        // str = str + c;
-        // console.log("here is the random character:" + c);
-        // console.log("here is str in genChar: " + str);
+
         return c
     }
 
@@ -97,16 +74,16 @@ if (passwordLength < 8 || passwordLength > 128){
         var div = document.getElementById("checkboxes"); 
         div.style.textAlign = "center";
               
-        // creating checkbox element 
+        // creating checkbox elements 
         var checkbox = document.createElement('input'); 
-          
+
         // Assigning the attributes to created checkbox
         checkbox.type = "checkbox"; 
         checkbox.id = names[i]; 
-        checkbox.setAttribute("style", "padding: 5px; margin: 5px, 10px, 5px, 10px");
-          
+
         // creating label for checkbox 
         var label = document.createElement('label'); 
+        label.style = "padding: 8px";
           
         // assigning correct name for the label tag   
         label.htmlFor = names[i]; 
@@ -127,11 +104,9 @@ generateBtn.addEventListener("click", writePassword);
 // Write password to the #password input
 function writePassword() {
 
-    
-
     var passwordText = document.querySelector("#password");
     
-    var testString = ""
+    var pwAlphabet = ""
     // record each checkbox's state
     for(var i =0; i < checkBoxArray.length; i++){
 
@@ -140,17 +115,17 @@ function writePassword() {
 
         //add appropriate character alphabets to randomization process
         if (box.checked){
-            testString = testString + checkBoxObject[checkBoxArray[i]].toString();
+            pwAlphabet = pwAlphabet + checkBoxObject[checkBoxArray[i]].toString();
         }
     }
 
     //check if user has selected at least one checkbox and generate a random string
-    if(testString.length > 0){
-        var password = generatePassword(testString);
+    if(pwAlphabet.length > 0){
+
+        var password = generatePassword(pwAlphabet);
         passwordText.value = password;
-        console.log("password after call:" + password);
     } else {
-        alert("You must selec at least one checkbox");
+        alert("You must select at least one checkbox");
     }
 
   }
