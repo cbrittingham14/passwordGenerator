@@ -1,27 +1,18 @@
 // Assignment Code
 var generateBtn = document.querySelector("#generate");
+var slider = document.getElementById("pwlength");
+var sliderLabel = document.getElementById("sliderlabel");
+
+//update the slider label when the slider moves
+slider.addEventListener("change", function(){
+    sliderLabel.textContent = slider.value;
+})
 
 // make an array for the names of each checkbox
 var checkBoxArray = ["lowercase", "uppercase", "numeric", "special"];
 
 // make checkboxes based on the array passed to the function
 mkCheckBoxes(checkBoxArray);
-
-// Accept password length input
-var passwordLength = parseInt(prompt("How long would you like the password to be? (between 8 and 128 characters)"));
-
-//Verify password length is within bounds (8-128)
-if (passwordLength < 8 || passwordLength > 128){
-    
-    var validLength = false;
-    do{
-        passwordLength = parseInt(prompt("Enter a number between 8 and 128"));
-  
-        if (passwordLength > 8 && passwordLength < 129){
-          validLength = true;
-        }
-      } while (validLength === false)
-  }
    
    //Input strings for needed characters
   var alph = "abcdefghijklmnopqrstuvwxyz";
@@ -37,18 +28,14 @@ if (passwordLength < 8 || passwordLength > 128){
     "special": spec,
   }
 
-// split strings into Arrays filled with each character alone
-  function mkArray(a){
-      var s = a.split("");
-      return s
-  }
    // make a random string of characters from the selected alphabets and password length
     function generatePassword(chars){
 
-        var pwString = ""
-        var charArray = chars.split("");
+        var pwString = ""               // make a string to locally store the generated password
+        var charArray = chars.split("");  // make array from received string
+        var pwLength = parseInt(slider.value); // read slider vale to determine password length
 
-        for(var i = 0; i < passwordLength; i++){
+        for(var i = 0; i < pwLength; i++){
             var randomChar = genChar(charArray);
             pwString = pwString + randomChar;
         }
@@ -100,17 +87,15 @@ if (passwordLength < 8 || passwordLength > 128){
 // Add event listener to generate button
 generateBtn.addEventListener("click", writePassword);
 
-
 // Write password to the #password input
 function writePassword() {
 
-    var passwordText = document.querySelector("#password");
-    
+    var passwordText = document.querySelector("#password");    
     var pwAlphabet = ""
     // record each checkbox's state
     for(var i =0; i < checkBoxArray.length; i++){
 
-        //create local variables
+        //create local variable
         var box = document.getElementById(checkBoxArray[i]);
 
         //add appropriate character alphabets to randomization process
@@ -118,14 +103,11 @@ function writePassword() {
             pwAlphabet = pwAlphabet + checkBoxObject[checkBoxArray[i]].toString();
         }
     }
-
     //check if user has selected at least one checkbox and generate a random string
     if(pwAlphabet.length > 0){
-
         var password = generatePassword(pwAlphabet);
         passwordText.value = password;
     } else {
         alert("You must select at least one checkbox");
     }
-
   }
