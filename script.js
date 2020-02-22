@@ -45,24 +45,36 @@ if (passwordLength < 8 || passwordLength > 128){
       return s
   }
    
-    function randomString (arr){
+    // function randomString (arr){
+    //     // var strArr = []
+    //     // var s;
+    //     for(var i=0; i < passwordLength; i++){
 
-        var strArr = []
-        var s;
+    //         var rand = Math.random();
+    //         var index;
 
-        for(var i=0; i < passwordLength; i++){
+    //         index = Math.floor(arr.length * rand);
 
-            var rand = Math.random();
-            var index;
-
-            index = Math.floor(arr.length * rand);
-
-            var localArr = mkArray(arr[index]);
+    //         var localArr = mkArray(arr[index]);
             
-            //here is the problem
-           var c = genChar(localArr);
+    //         //here is the problem
+    //        var c = genChar(localArr);
+    //     }
+    // }
+
+    function generatePassword(chars){
+
+        var pwString = ""
+        var charArray = chars.split("");
+
+        for(var i = 0; i < passwordLength; i++){
+            var randomChar = genChar(charArray);
+            pwString = pwString + randomChar;
         }
+        return pwString;
     }
+
+
 
     // generate a random character from the array arr
     function genChar(arr){
@@ -72,9 +84,9 @@ if (passwordLength < 8 || passwordLength > 128){
         var i = Math.floor(l * rand); //generate random index
         var char = arr[i];  //select random character from array
         var c = char.toString()
-        str = str + c;
+        // str = str + c;
         // console.log("here is the random character:" + c);
-        console.log("here is str in genChar: " + str);
+        // console.log("here is str in genChar: " + str);
         return c
     }
 
@@ -115,14 +127,10 @@ generateBtn.addEventListener("click", writePassword);
 // Write password to the #password input
 function writePassword() {
 
-    // var password = generatePassword();
+    
+
     var passwordText = document.querySelector("#password");
     
-    passwordText.value = password;
-
-    console.log("password:" + password);
-
-    var passwordAlphArray = [];
     var testString = ""
     // record each checkbox's state
     for(var i =0; i < checkBoxArray.length; i++){
@@ -130,23 +138,17 @@ function writePassword() {
         //create local variables
         var box = document.getElementById(checkBoxArray[i]);
 
-        //add checked boxes to index array
+        //add appropriate character alphabets to randomization process
         if (box.checked){
-
             testString = testString + checkBoxObject[checkBoxArray[i]].toString();
-            console.log("testString: " + testString);
-
-        //add selected boxes to password array
-        passwordAlphArray.push(checkBoxObject[checkBoxArray[i]]);
-            
-            console.log("passwordalphaArray: " + passwordAlphArray);
         }
     }
 
     //check if user has selected at least one checkbox and generate a random string
-    if(passwordAlphArray.length > 0){
-        
-        randomString(passwordAlphArray);
+    if(testString.length > 0){
+        var password = generatePassword(testString);
+        passwordText.value = password;
+        console.log("password after call:" + password);
     } else {
         alert("You must selec at least one checkbox");
     }
