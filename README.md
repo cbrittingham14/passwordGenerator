@@ -15,13 +15,13 @@ will be displayed in the text box above.  The user may copy the password to thei
 
 ## Screenshots
 
-![screenshot 1](/images.screenshot1.png)
+![screenshot 1](/images/screenshot1.png)
 
-![screenshot 2](/images.screenshot2.png)
+![screenshot 2](/images/screenshot2.png)
 
-![screenshot 3](/images.screenshot3.png)
+![screenshot 3](/images/screenshot3.png)
 
-![screenshot 4](/images.screenshot4.png)
+![screenshot 4](/images/screenshot4.png)
 
 ## Acknowledgements
 
